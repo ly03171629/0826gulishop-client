@@ -1,13 +1,23 @@
 <template>
-  <div class="swiper-container">
+
+  <swiper :options="swiperOptions">
+    <swiper-slide v-for="(img, index) in imgList" :key="img.id">
+      <img :src="img.imgUrl" :class="{active:index===defaultIndex}" @click="changeDefaultIndex(index)" />
+    </swiper-slide>
+    <div class="swiper-pagination" slot="pagination"></div>
+    <div class="swiper-button-prev" slot="button-prev"></div>
+    <div class="swiper-button-next" slot="button-next"></div>
+  </swiper>
+
+  <!-- <div class="swiper-container">
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="(img, index) in imgList" :key="img.id">
-        <img :src="img.imgUrl" />
+        <img :src="img.imgUrl" :class="{active:index===defaultIndex}" @click="changeDefaultIndex(index)" />
       </div>
     </div>
     <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -16,6 +26,39 @@ import "swiper/css/swiper.css";
 export default {
   name: "ImageList",
   props: ["imgList"],
+  data(){
+    return {
+      defaultIndex:0,  //默认有橙色框框的图片下标
+      swiperOptions: {
+        // direction: 'horizontal', // 水平切换选项
+        // loop: true, // 循环模式选项
+        // autoplay: { // 自动轮播
+        //   delay: 4000,
+        //   disableOnInteraction: false, // 用户操作后是否停止自动轮播
+        // }, 
+        // 如果需要分页器
+        // pagination: {
+        //   el: '.swiper-pagination',
+        // },
+        // 如果需要前进后退按钮
+
+        slidesPerView:5,
+        slidesPerGroup:3,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      }
+    }
+  },
+  methods:{
+    changeDefaultIndex(index){
+      this.defaultIndex = index
+      
+      //通过全局事件总线把选中的index传递给zoom
+      this.$bus.$emit('syncDefaultIndex',index)
+    }
+  }
 };
 </script>
 
@@ -44,10 +87,10 @@ export default {
         padding: 1px;
       }
 
-      &:hover {
-        border: 2px solid #f60;
-        padding: 1px;
-      }
+      // &:hover {
+      //   border: 2px solid #f60;
+      //   padding: 1px;
+      // }
     }
   }
 

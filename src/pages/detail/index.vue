@@ -78,11 +78,12 @@
                 <dt class="title">{{ spuSaleAttr.saleAttrName }}</dt>
                 <dd
                   changepirce="0"
-                  class="active"
+                  :class="{active:spuSaleAttrValue.isChecked === '1'}"
                   v-for="(
                     spuSaleAttrValue, index
                   ) in spuSaleAttr.spuSaleAttrValueList"
                   :key="spuSaleAttrValue.id"
+                  @click="changeChecked(spuSaleAttrValue,spuSaleAttr.spuSaleAttrValueList)"
                 >
                   {{spuSaleAttrValue.saleAttrValueName}}
                 </dd>
@@ -374,6 +375,13 @@ export default {
     getSkuDetailInfo() {
       this.$store.dispatch("getSkuDetailInfo", this.skuId);
     },
+    //排它处理用户点击选择销售属性值（谁变绿）
+    changeChecked(spuSaleAttrValue,spuSaleAttrValueList){
+      //第一步：所有的属性值全部变白
+      spuSaleAttrValueList.forEach(item => item.isChecked = '0')
+      //第二部：点击的这个属性值变绿
+      spuSaleAttrValue.isChecked = '1'
+    }
   },
 };
 </script>

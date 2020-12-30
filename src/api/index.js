@@ -3,6 +3,7 @@
   函数内部调用ajax函数发送请求
   函数返回的是promise对象
 */
+import { method } from 'lodash'
 import ajax from './ajax'
 import mockAjax from './mockAjax'
 
@@ -53,5 +54,17 @@ export const reqDetailInfo = (skuId) => {
   return ajax({
     url:`/item/${ skuId }`,
     method:'get'
+  })
+}
+
+
+//添加购物车（修改购物车的商品数量）
+///api/cart/addToCart/{ skuId }/{ skuNum }
+//post
+
+export const reqAddOrUpdateCart = (skuId,skuNum) => {
+  return ajax({
+    url:`/cart/addToCart/${ skuId }/${ skuNum }`,
+    method:'post'
   })
 }

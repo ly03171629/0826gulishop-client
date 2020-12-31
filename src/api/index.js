@@ -3,7 +3,6 @@
   函数内部调用ajax函数发送请求
   函数返回的是promise对象
 */
-import { method } from 'lodash'
 import ajax from './ajax'
 import mockAjax from './mockAjax'
 
@@ -83,4 +82,38 @@ export const reqCartList = () => {
 
 // reqCartList()
 
+//修改购物车的选中状态
+///api/cart/checkCart/{skuId}/{isChecked}
+//get
 
+export const reqUpdateCartChecked = (skuId,isChecked) => {
+  return ajax({
+    url:`/cart/checkCart/${skuId}/${isChecked}`,
+    method:'get'
+  })
+}
+
+// 删除购物车
+///api/cart/deleteCart/{skuId}
+// delete
+
+export const reqDeleteCart = (skuId) => {
+  return ajax({
+    url:`/cart/deleteCart/${skuId}`,
+    method:'delete'
+  })
+}
+
+
+//修改购物车选中状态所有的接口
+// /api/cart/batchCheckCart/{isChecked}
+// post
+// data参数   是一个数组
+
+// export const reqUpdateCartCheckedAll = (isChecked,skuIdList) => {
+//   return ajax({
+//     url:`/cart/batchCheckCart/${isChecked}`,
+//     method:'post',
+//     data:skuIdList
+//   })
+// }

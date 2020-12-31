@@ -13,7 +13,7 @@
       <div class="cart-body">
         <ul class="cart-list" v-for="(shopCart,index) in shopCartList" :key="shopCart.id">
           <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list" :checked="shopCart.isChecked">
+            <input type="checkbox" name="chk_list" :checked="shopCart.isChecked" @click="updateOne(shopCart)">
           </li>
           <li class="cart-list-con2">
             <img :src="shopCart.imgUrl">
@@ -23,15 +23,15 @@
             <span class="price">{{shopCart.cartPrice}}</span>
           </li>
           <li class="cart-list-con5">
-            <a href="javascript:void(0)" class="mins">-</a>
-            <input autocomplete="off" type="text" :value="shopCart.skuNum" minnum="1" class="itxt">
-            <a href="javascript:void(0)" class="plus">+</a>
+            <a href="javascript:void(0)" class="mins" @click="changeCartNum(shopCart,-1,true)">-</a>
+            <input autocomplete="off" type="text" :value="shopCart.skuNum" minnum="1" class="itxt" @change="changeCartNum(shopCart,$event.target.value*1,false)">
+            <a href="javascript:void(0)" class="plus" @click="changeCartNum(shopCart,1,true)">+</a>
           </li>
           <li class="cart-list-con6">
             <span class="sum">{{shopCart.cartPrice * shopCart.skuNum}}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
+            <a href="javascript:;" class="sindelet" @click="deleteOne(shopCart)">删除</a>
             <br>
             <a href="#none">移到收藏</a>
           </li>
@@ -44,7 +44,7 @@
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a href="javascript:;" @click="deleteAll">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
@@ -73,12 +73,70 @@ import { mapState } from 'vuex'
     methods:{
       getCartList(){
         this.$store.dispatch('getCartList')
+      },
+      //修改购物车商品数量
+      async changeCartNum(shopCart,disNum,flag){
+        if(!flag){
+          //针对输入的数据是最终的商品数量，我们得转化为变化的量
+          if(disNum > 0){
+            disNum = disNum - shopCart.skuNum
+          }else{
+            disNum = 1 - shopCart.skuNum
+          }
+        }else{
+          //针对点击+-的数据，传递过来的就是变化的量
+          if(disNum + shopCart.skuNum <= 0){
+            disNum = 1 - shopCart.skuNum
+          }
+        }
+
+        //把传递过来的数据全部转化为正确的变化的量之后就可以发请求
+        try {
+          await this.$store.dispatch('addOrUpdateCart',{skuId:shopCart.skuId,skuNum:disNum})
+          alert('修改数量成功')
+          this.getCartList()
+        } catch (error) {
+          alert(error.message)
+        }
+
+      },
+      //修改购物车选中状态单个
+      async updateOne(shopCart){
+        try {
+          await this.$store.dispatch('updateCartChecked',{skuId:shopCart.skuId,isChecked:shopCart.isChecked?0:1})
+          alert('修改状态成功')
+          this.getCartList()
+        } catch (error) {
+          alert(error.message)
+        }
+        
+      },
+      //删除购物车单个
+      async deleteOne(shopCart){
+        try {
+          await this.$store.dispatch('deleteCart',shopCart.skuId)
+          alert('删除成功')
+          this.getCartList()
+        } catch (error) {
+          alert(error.message)
+        }
+      },
+      //删除购物车多个
+      async deleteAll(){
+        try {
+          await this.$store.dispatch('deleteCartAll')
+          alert('删除多个成功')
+          this.getCartList()
+        } catch (error) {
+          alert(error.message)
+        }
+        
       }
     },
     computed:{
       // mapState使用数组  必须名字相同   数据只能总的state当中的数据才能使用，模块化后不能使用
       ...mapState({
-        shopCartList: state => state.shopcart.shopCartList
+        shopCartList: state => state.shopcart.shopCartList || []
       }),
       checkedNum(){
         return this.shopCartList.reduce((prev,item) => {
@@ -100,8 +158,17 @@ import { mapState } from 'vuex'
         get(){
           return this.shopCartList.every(item => item.isChecked)
         },
-        set(){
-
+        async set(val){
+          // this.$store.dispatch('updateCartCheckedAll',val?1:0) 是调用updateCartCheckedAll异步函数
+          // 它的结果拿的是异步函数的返回值 固定的那个promise，不是函数return后面Promise.all的返回值promise
+          // 但是这个promise的结果和return后面Promise.all的返回值promise的状态结果一致
+          try {
+            const result = await this.$store.dispatch('updateCartCheckedAll',val?1:0)
+            // alert('修改所有的状态成功')
+            this.getCartList()
+          } catch (error) {
+            alert(error.message)
+          }
         }
       }
     }

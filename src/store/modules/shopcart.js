@@ -1,9 +1,13 @@
-import { reqAddOrUpdateCart } from "@/api"
+import { reqAddOrUpdateCart,reqCartList } from "@/api"
 
 const state = {
+  shopCartList:[]
 }
 
 const mutations = {
+  RECEIVESHOPCARTLIST(state,shopCartList){
+    state.shopCartList = shopCartList
+  }
 }
 
 const actions = {
@@ -24,6 +28,12 @@ const actions = {
       return Promise.reject(new Error('failed'))
     }
 
+  },
+  async getCartList({commit}){
+    const result = await reqCartList()
+    if(result.code === 200){
+      commit('RECEIVESHOPCARTLIST',result.data)
+    }
   }
 }
 

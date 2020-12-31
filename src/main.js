@@ -8,6 +8,11 @@ import Pagination from "./components/Pagination"
 import './plugins/swiper' // 加载swiper的配置
 import './mock/mockServer'
 
+// import '@/api'
+
+// import {reqCartList} from '@/api'
+// reqCartList()
+
 // 浏览器控制台不显示非生产环境打包的提示
 Vue.config.productionTip = false
 

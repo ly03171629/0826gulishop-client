@@ -37,7 +37,6 @@
         let mouseX = event.offsetX
         let mouseY = event.offsetY
 
-
         //2、计算遮罩的位置让遮罩动
         let mask = this.$refs.mask
         let maskX = mouseX - mask.offsetWidth/2
@@ -63,8 +62,6 @@
         //3、大图动
         big.style.left = -maskX * 2 + 'px'
         big.style.top = -maskY * 2 + 'px'
-
-
       }
     }
 

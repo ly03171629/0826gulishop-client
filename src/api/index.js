@@ -105,15 +105,29 @@ export const reqDeleteCart = (skuId) => {
 }
 
 
-//修改购物车选中状态所有的接口
-// /api/cart/batchCheckCart/{isChecked}
-// post
-// data参数   是一个数组
+//用户注册
+///api/user/passport/register
+//post
 
-// export const reqUpdateCartCheckedAll = (isChecked,skuIdList) => {
-//   return ajax({
-//     url:`/cart/batchCheckCart/${isChecked}`,
-//     method:'post',
-//     data:skuIdList
-//   })
-// }
+export const reqUserRegister = (userInfo) => {
+  return ajax({
+    url:'/user/passport/register',
+    method:'post',
+    data:userInfo
+  })
+} 
+
+
+//用户登录
+///api/user/passport/login
+//post
+
+export const reqUserLogin = (userInfo) => {
+  return ajax({
+    url:'/user/passport/login',
+    method:'post',
+    data:userInfo
+  })
+}
+
+

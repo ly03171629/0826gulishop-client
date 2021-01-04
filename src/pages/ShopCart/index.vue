@@ -98,7 +98,6 @@ import { mapState } from 'vuex'
         } catch (error) {
           alert(error.message)
         }
-
       },
       //修改购物车选中状态单个
       async updateOne(shopCart){

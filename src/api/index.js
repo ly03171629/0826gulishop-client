@@ -130,4 +130,44 @@ export const reqUserLogin = (userInfo) => {
   })
 }
 
+//根据token获取用户信息
+///api/user/passport/auth/getUserInfo
+//get
+
+export const reqUserInfo = () => {
+  return ajax({
+    url:'/user/passport/auth/getUserInfo',
+    method:'get'
+  })
+}
+
+
+//退出登录
+///api/user/passport/logout
+//get
+
+export const reqUserLogout = () => {
+  return ajax({
+    url:'/user/passport/logout',
+    method:'get'
+  })
+}
+
+//获取交易页面信息
+///api/order/auth/trade
+//get
+
+export const reqTradeInfo = () => {
+  return ajax({
+    url:'/order/auth/trade',
+    method:'get'
+  })
+}
+
+
+
+
+
+
+
 

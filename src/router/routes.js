@@ -9,8 +9,18 @@ import Detail from '@/pages/detail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
 import ShopCart from '@/pages/ShopCart'
 import Trade from '@/pages/Trade'
+import Pay from '@/pages/Pay'
+import PaySuccess from '@/pages/PaySuccess'
 
 export default [
+  {
+    path: '/pay',
+    component: Pay
+  },
+  {
+    path: '/paysuccess',
+    component: PaySuccess
+  },
   {
     path: '/trade',
     component: Trade

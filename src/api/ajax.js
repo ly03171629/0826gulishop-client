@@ -62,7 +62,7 @@ service.interceptors.response.use(
 
     /* 4. 统一处理请求错误, 具体请求也可以选择处理或不处理 */
     alert(error.message || '未知的请求错误')
-
+    // return  new Promise(() => {})
     // return error // 不能这么写
     // throw error
     return Promise.reject(error)

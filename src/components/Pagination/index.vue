@@ -84,8 +84,40 @@ export default {
     start/end: 连续页码数的开始页码与结束页码 {start: 3, end: 7}
     */
     startEnd () {
-      let start, end
+      // let start, end , disNum
+      // const {myCurrentPage, showPageNo, totalPages} = this
+      // if(showPageNo > totalPages){
+      //   start = 1
+      //   end = totalPages
+      // }else{
+      //   start = myCurrentPage - Math.floor(showPageNo/2)
+      //   end = myCurrentPage + Math.floor(showPageNo/2)
+      //   if(start < 1){
+      //     disNum = 1 - start
+      //     start += disNum
+      //     end += disNum
+      //   }
+      //   if(end > totalPages){
+      //     disNum = totalPages - end
+      //     start -= disNum
+      //     end -= disNum
+      //   }
+      // }
+
+      // return {start,end}
+
+
+      let start, end 
       const {myCurrentPage, showPageNo, totalPages} = this
+      /*
+      //第一种情况是非正常情况
+        总页码比乱系页数还小   start就是1  end就是总页数
+      //第二种情况是正常情况
+      */
+
+
+
+    
 
       // 计算start
       /* 
@@ -138,7 +170,6 @@ export default {
           start = 1
         }
       }
-
       return {start, end} 
     }
   },

@@ -6,6 +6,7 @@ import TypeNav from "./components/TypeNav"
 import Pagination from "./components/Pagination"
 
 import './plugins/swiper' // 加载swiper的配置
+import './plugins/element' //加载element-ui相关的配置
 import './mock/mockServer'
 
 

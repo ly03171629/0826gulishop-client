@@ -151,8 +151,6 @@ export default {
               done()
               this.$router.push("/paysuccess");
 
-
-
             }else if(action === 'cancel'){
               //点击的取消
               this.$message.warning('请联系尚硅谷前台小姐姐')

@@ -29,7 +29,9 @@
   -->
 
     <!-- element-ui的组件标签input 可以和原生input一样的使用，感觉是一样的 -->
-    <!-- 但是，el-input是组件标签  v-model用在它身上和原生的input身上本质是不一样的 -->
+    <!-- 但是，el-input是组件标签  v-model用在它身上和原生的input身上本质是不一样的
+    本质用的就是上面v-model的父子同步
+    -->
     <el-input v-model="msg" placeholder=""></el-input>    
     <!-- <el-input :value="msg" @input="msg = $event" placeholder=""></el-input>     -->
 
